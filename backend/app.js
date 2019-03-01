@@ -44,22 +44,11 @@ app.post('/api/posts',(req,res,next) => {
 
 });
 app.get('/api/posts',(req,res,next) =>{
-  const posts = [
-    {
-      "id": "1324124214",
-      "title": "Hello who is this",
-      "content": "Hey this is MEAN course!"
-    },
-    {
-      "id": "13243124gdss",
-      "title": "What is Mean stack",
-      "content": "MEAN stands for Mongo Angular Express Node"
-    }
-  ];
-  // res.json(posts);
-  res.status('200').json({
-    "message": "Message was delivered successfully",
-    "posts": posts
+  Post.find().then((results)=>{
+    res.status('200').json({
+      "message": "Message was delivered successfully",
+      "posts": results
+    });
   });
 });
 
