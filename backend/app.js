@@ -28,7 +28,6 @@ app.use((req,res,next) => {
   next();
 });
 
-
 app.post('/api/posts',(req,res,next) => {
   // const post = req.body;
   const post = new Post({
@@ -36,11 +35,15 @@ app.post('/api/posts',(req,res,next) => {
     content: req.body.content
   });
   // console.log(post);
-  post.save();
-
-  res.status(201).json({
-    "message": "Post was addedd Successfully"
+  post.save().then(result => {
+    console.log(result);
+    res.status(201).json({
+      message: "Post was addedd Successfully",
+      postID: result._id
+    });
   });
+
+
 
 });
 app.get('/api/posts',(req,res,next) =>{
@@ -49,6 +52,15 @@ app.get('/api/posts',(req,res,next) =>{
       "message": "Message was delivered successfully",
       "posts": results
     });
+  });
+});
+
+app.delete('/api/posts/:id', (req, res, next) => {
+  Post.deleteOne({_id:req.params.id}).then(result =>{
+    console.log(result);
+  });
+  res.status('200').json({
+    message: "Post deleted"
   });
 });
 
