@@ -31,6 +31,10 @@ export class PostsService {
     });
   }
 
+  getPost(postId: string){
+    return this.http.get<{_id: string, title: string, content: string}>('http://localhost:3000/api/posts/' + postId);
+  }
+
   getPostUpdateListner () {
     return this.postUpdated.asObservable();
   }
@@ -47,10 +51,6 @@ export class PostsService {
     });
   }
 
-  getPost(postId: string){
-    return {...this.posts.find(post=> post.id === postId)};
-
-  }
   deletePost(postID: String){
     this.http.delete('http://localhost:3000/api/posts/' + postID)
     .subscribe(() => {
