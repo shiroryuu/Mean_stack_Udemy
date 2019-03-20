@@ -64,10 +64,24 @@ router.post("", multer({storage: storage}).single("image") ,(req,res,next) => {
 });
 
 router.get("",(req,res,next) =>{
-  Post.find().then((results)=>{
+  const pageSize = +req.query.pagesize;
+  const currentPage = +req.query.page; // + is used for converting into int
+  const pageQuery = Post.find();
+  let posts;
+
+  if (pageSize && currentPage){
+    pageQuery
+    .skip(pageSize * (currentPage - 1))
+    .limit(pageSize);
+  }
+  pageQuery.then((results)=>{
+    posts = results;
+    return Post.count();
+  }).then(count=>{
     res.status(200).json({
       "message": "Message was delivered successfully",
-      "posts": results
+      "posts": posts,
+      "postsCount": count
     });
   });
 });

@@ -7,7 +7,10 @@ ul {
 a {
   text-decoration: none;
   color: white;
+}
 
+ul {
+  display: flex;
 }
 
 .spacer {
