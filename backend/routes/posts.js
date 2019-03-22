@@ -38,6 +38,11 @@ router.get("/:id",(req,res,next)=>{
       res.status(404).json({message: "Post not found !!"});
     }
   })
+  .catch(error => {
+    res.status(500).json({
+      message: "Fetching post failed!"
+    })
+  });
 });
 
 router.post("", checkAuth, multer({storage: storage}).single("image") ,(req,res,next) => {
@@ -63,6 +68,11 @@ router.post("", checkAuth, multer({storage: storage}).single("image") ,(req,res,
         creator: result.creator
       }
     });
+  })
+  .catch(error =>{
+    res.status(500).json({
+      message: "Failed to add post"
+    })
   });
 });
 
@@ -86,6 +96,11 @@ router.get("",(req,res,next) =>{
       "posts": posts,
       "postsCount": count
     });
+  })
+  .catch(error => {
+    res.status(500).json({
+      message: "Fetching post failed!"
+    })
   });
 });
 
@@ -112,6 +127,11 @@ multer({storage: storage}).single("image"),
       } else {
         res.status(401).json({message:"unauthorized!"});
       }
+  })
+  .catch(error=>{
+    res.status(500).json({
+      message: "couldn't update post!"
+    });
   });
 });
 
@@ -127,6 +147,11 @@ router.delete("/:id", checkAuth, (req, res, next) => {
         message: "unauthorized"
       });
     }
+  })
+  .catch(error => {
+    res.status(500).json({
+      message: "Fetching post failed!"
+    })
   });
 });
 
