@@ -23,18 +23,20 @@ export class PostsService {
           title: post.title,
           content: post.content,
           id: post._id,
-          imagePath: post.imagePath
+          imagePath: post.imagePath,
+          creator: post.creator
         };
       }), postsCount: postData.postsCount};
     }))
     .subscribe((transformedPostsData) => {
+      // console.log(transformedPostsData);
       this.posts = transformedPostsData.posts;
       this.postUpdated.next({posts: [...this.posts], postsCount: transformedPostsData.postsCount});
     });
   }
 
   getPost(postId: string){
-    return this.http.get<{_id: string, title: string, content: string, imagePath: string}>(
+    return this.http.get<{_id: string, title: string, content: string, imagePath: string, creator: string}>(
       'http://localhost:3000/api/posts/' + postId);
   }
 
@@ -76,7 +78,8 @@ export class PostsService {
         id: id,
         title: title,
         content: content,
-        imagePath: image
+        imagePath: image,
+        creator: null
       };
     }
     this.http.put('http://localhost:3000/api/posts/' + id, postData)
