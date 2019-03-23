@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
-const BACKEND_URL = environment.apiUrl+'user';
+const BACKEND_URL = environment.apiUrl+'/user';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private isAuthenticated = false;
