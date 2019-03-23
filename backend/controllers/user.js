@@ -39,7 +39,7 @@ exports.userLogin = (req,res,next)=>{
       return res.status(401).json({message: "Invalid Credentials!"});
     }
     const token = jwt.sign({email: fetchedUser.email, userId: fetchedUser._id},
-      "V9h5Zt8m5AlItRIYtH9TJmGfsm6suncr4phS87wabJB4C7cPtA80oe",
+      process.env.JWT_SECRET_KEY,
       { expiresIn: "1h" });
     // console.log(token);
     res.status(200).json({

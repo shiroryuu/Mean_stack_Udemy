@@ -1,0 +1,6 @@
+{
+  "env": {
+    "MONGO_ATLAS_PW": "KLussPsy1uxzxbA1@cluster0-foncb.mongodb.net",
+    "JWT_SECRET_KEY": "V9h5Zt8m5AlItRIYtH9TJmGfsm6suncr4phS87wabJB4C7cPtA80oe"
+  }
+}
