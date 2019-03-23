@@ -5,9 +5,11 @@ import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 import { Post } from './post.model';
+import { environment } from 'src/environments/environment';
+
+const BACKEND_URL = environment.apiUrl + '/posts';
 
 @Injectable({providedIn: 'root'})
-
 export class PostsService {
   private posts: Post[] = [];
   private postUpdated = new Subject<{posts: Post[], postsCount: number}>();
@@ -16,7 +18,7 @@ export class PostsService {
 
   getPosts(postsPerPage: number, currentPage: number) {
     const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`;
-    this.http.get<{message: string, posts: any, postsCount: number}>('http://localhost:3000/api/posts'+ queryParams)
+    this.http.get<{message: string, posts: any, postsCount: number}>(BACKEND_URL+ queryParams)
     .pipe(map((postData) => {
       return { posts: postData.posts.map(post => {
         return {
@@ -37,7 +39,7 @@ export class PostsService {
 
   getPost(postId: string){
     return this.http.get<{_id: string, title: string, content: string, imagePath: string, creator: string}>(
-      'http://localhost:3000/api/posts/' + postId);
+      BACKEND_URL + '/' + postId);
   }
 
   getPostUpdateListner () {
@@ -51,7 +53,7 @@ export class PostsService {
     postData.append("content", content);
     postData.append("image", image, title);
     this.http.post<{message: string, post: Post}>(
-      'http://localhost:3000/api/posts',
+      BACKEND_URL,
       postData
       )
     .subscribe((respData) => {
@@ -62,7 +64,7 @@ export class PostsService {
 
   deletePost(postID: String){
     return this.http
-    .delete('http://localhost:3000/api/posts/' + postID);
+    .delete(BACKEND_URL +'/' + postID);
   }
 
   updatePost(id: string, title: string, content: string, image: File | string) {
@@ -82,7 +84,7 @@ export class PostsService {
         creator: null
       };
     }
-    this.http.put('http://localhost:3000/api/posts/' + id, postData)
+    this.http.put(BACKEND_URL + '/' + id, postData)
       .subscribe(response =>{
         this.router.navigate(['/']);
       });
