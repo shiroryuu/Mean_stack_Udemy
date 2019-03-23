@@ -5,23 +5,24 @@ import { Subscription } from 'rxjs';
 
 @Component({
   templateUrl: './signup.component.html',
-  styleUrls: [ './signup.component.css' ]
+  styleUrls: ['./signup.component.css']
 })
-
 export class SignupComponent implements OnInit, OnDestroy {
   isLoading = false;
   private authStatusSub: Subscription;
 
-  constructor(public authService: AuthService){}
+  constructor(public authService: AuthService) {}
 
   ngOnInit() {
-    this.authStatusSub = this.authService.getAuthStatusListner().subscribe( isAuthenticated =>{
-      this.isLoading = false
-    });
+    this.authStatusSub = this.authService
+      .getAuthStatusListner()
+      .subscribe(isAuthenticated => {
+        this.isLoading = false;
+      });
   }
 
   onSignUp(form: NgForm) {
-    if (form.invalid){
+    if (form.invalid) {
       return;
     }
     this.isLoading = true;
